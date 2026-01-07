@@ -9,10 +9,10 @@ Currently, two official plugins are available:
 
 ## CSV - Application: 
 
-###  To run the application:
---> git clone 
---> npm install
---> npm run dev
+###  To run the application
+--> git clone  
+--> npm install 
+--> npm run dev 
 
 It does two things: 
 1) If the user uploads a CSV file of supplier-items, it will validate it and then take the user to another page displaying the table of uploaded data. The user can sort columns, show or hide them of freeze them as per his/her requirements.
