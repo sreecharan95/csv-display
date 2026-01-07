@@ -25,6 +25,17 @@ export const HierarchyRowSchema = z.object({
   Rate: z.coerce.number(),
 });
 
+export type AggregateResult = {
+  qty: number;
+  rate: number | null;
+};
+
+export type AggregatedTreeNode = CsvTreeNode & {
+  totalQty: number;
+  estRate: number | null;
+  children?: AggregatedTreeNode[];
+};
+
 export type CsvTreeNode = {
   id: string;
   label: string;

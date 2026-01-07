@@ -4,15 +4,14 @@ import CsvTable from "./CsvTable";
 import { tablePageStyles } from "../allStyles";
 import { useCsvStore } from "../utils/csvStore";
 import { TreeTable } from "./TreeTable";
-import { buildCsvTree, getRecurseAggregates } from "../utils/commonUtils";
+import { buildCsvTree, buildAggregatedTree } from "../utils/commonUtils";
 
 const TablePage: React.FC = () => {
   const navigate = useNavigate();
   const { data, headers, clearCsv, tableType } = useCsvStore();
   const treeData = useMemo(() => {
-    const built = buildCsvTree(data);
-    built.forEach(getRecurseAggregates);
-    return built;
+    const tree = buildCsvTree(data);
+    return tree.map(buildAggregatedTree);
   }, [data]);
 
   if (!data.length || !headers.length) {

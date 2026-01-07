@@ -1,4 +1,9 @@
-import type { CsvRow, CsvTreeNode, HierarchyCsvRow } from "./schema";
+import type {
+  AggregatedTreeNode,
+  CsvRow,
+  CsvTreeNode,
+  HierarchyCsvRow,
+} from "./schema";
 
 export const headers = [
   "Item Code",
@@ -55,30 +60,35 @@ export function getStickyStyle(
   return {};
 }
 
-export function getRecurseAggregates(node: CsvTreeNode): {
-  qty: number;
-  rate: number | null;
-} {
+const toNumber = (val: unknown): number =>
+  typeof val === "number" && !Number.isNaN(val) ? val : 0;
+
+export function buildAggregatedTree(node: CsvTreeNode): AggregatedTreeNode {
   if (node.level === "item" && node.data) {
-    const qty = Number(node.data.quantity) || 0;
-    const rate = Number(node.data.rate) || 0;
-    node.totalQty = qty;
-    node.estRate = rate;
-    return { qty, rate };
+    const qty = toNumber(node.data.quantity);
+    const rate = toNumber(node.data.rate);
+    return {
+      ...node,
+      totalQty: qty,
+      estRate: qty > 0 ? rate : 0,
+      children: undefined,
+    };
   }
   let totalQty = 0;
   let totalCost = 0;
-  node.children?.forEach((child) => {
-    const { qty, rate } = getRecurseAggregates(child);
-    if (qty > 0 && rate !== null) {
-      totalQty += qty;
-      totalCost += qty * rate;
+  const children = (node.children ?? []).map(buildAggregatedTree);
+  for (const child of children) {
+    if (child.totalQty > 0 && child.estRate !== null) {
+      totalQty += child.totalQty;
+      totalCost += child.totalQty * child.estRate;
     }
-  });
-  const weightedRate = totalQty > 0 ? totalCost / totalQty : 0;
-  node.totalQty = totalQty;
-  node.estRate = weightedRate;
-  return { qty: totalQty, rate: weightedRate };
+  }
+  return {
+    ...node,
+    children,
+    totalQty,
+    estRate: totalQty > 0 ? totalCost / totalQty : 0,
+  };
 }
 
 export function buildCsvTree(rows: HierarchyCsvRow[]): CsvTreeNode[] {
