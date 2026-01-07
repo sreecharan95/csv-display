@@ -9,7 +9,7 @@ Currently, two official plugins are available:
 
 ## CSV - Application: 
 
-# To run the application:
+###  To run the application:
 --> git clone 
 --> npm install
 --> npm run dev
