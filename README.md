@@ -8,6 +8,12 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## CSV - Application: 
+
+# To run the application:
+--> git clone 
+--> npm install
+--> npm run dev
+
 It does two things: 
 1) If the user uploads a CSV file of supplier-items, it will validate it and then take the user to another page displaying the table of uploaded data. The user can sort columns, show or hide them of freeze them as per his/her requirements.
 The table neatly displays the material rate of various suppliers and its variation from the base rate.
