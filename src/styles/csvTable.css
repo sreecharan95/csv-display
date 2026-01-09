@@ -1,0 +1,23 @@
+.csv-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #be1919 #f1f1f1;
+}
+
+.csv-scroll-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.csv-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.csv-scroll-container::-webkit-scrollbar-thumb {
+  background: #141313;
+  border-radius: 10px;
+}
+
+.csv-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #8f1212;
+}

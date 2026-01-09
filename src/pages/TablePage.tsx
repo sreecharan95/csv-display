@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CsvTable from "./CsvTable";
-import { tablePageStyles } from "../allStyles";
+import { tablePageStyles } from "../styles/custom/allStyles";
 import { useCsvStore } from "../utils/csvStore";
 import { TreeTable } from "./TreeTable";
 import { buildCsvTree, buildAggregatedTree } from "../utils/commonUtils";
@@ -37,7 +37,11 @@ const TablePage: React.FC = () => {
     <div style={tablePageStyles.page}>
       <div style={tablePageStyles.header}>
         <div>
-          <h2 style={tablePageStyles.title}>Supplier Comparison Table</h2>
+          <h2 style={tablePageStyles.title}>
+            {tableType === "flat"
+              ? "Supplier Comparison Table"
+              : "Category Tree Table"}
+          </h2>
           <p style={tablePageStyles.subtitle}>
             Review and compare supplier pricing from your uploaded CSV file
           </p>

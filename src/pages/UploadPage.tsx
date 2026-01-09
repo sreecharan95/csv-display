@@ -7,7 +7,7 @@ import {
   type CsvRow,
   type csvTreeType,
 } from "../utils/schema";
-import { tableStyles, uploadPageStyles } from "../allStyles";
+import { tableStyles, uploadPageStyles } from "../styles/custom/allStyles";
 import { headers } from "../utils/commonUtils";
 import { useCsvStore } from "../utils/csvStore";
 
@@ -97,14 +97,7 @@ const UploadPage: React.FC = () => {
               </span>
               <button
                 onClick={handleRemoveFile}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#dc2626",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: "13px",
-                }}
+                style={uploadPageStyles.removeBtn}
               >
                 Remove
               </button>

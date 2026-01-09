@@ -1,8 +1,39 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import type { ICsvTable } from "../utils/schema";
-import { getCellStyle, tableStyles as styles } from "../allStyles";
-import { getDisplayValue } from "../csvHelpers";
+import type { ICell, ICsvTable } from "../utils/schema";
+import {
+  getCellStyle,
+  tableStyles as styles,
+} from "../styles/custom/allStyles";
 import { getStickyStyle } from "../utils/commonUtils";
+import "../styles/csvTable.css";
+
+function getDisplayValue(props: ICell): React.ReactNode {
+  const { header, row, supplierHeaders } = props;
+  const value = row[header];
+  if (supplierHeaders.includes(header) && typeof value === "number") {
+    const estimated = row["Estimated Rate"];
+    if (typeof estimated === "number" && estimated !== 0) {
+      const diff = ((value - estimated) / estimated) * 100;
+      const arrow = diff > 0 ? "↑" : diff < 0 ? "↓" : "";
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            lineHeight: 1.2,
+          }}
+        >
+          <span>{value}</span>
+          <span style={{ fontSize: "0.75em", color: "#000" }}>
+            {arrow} {Math.abs(diff).toFixed(1)}%
+          </span>
+        </div>
+      );
+    }
+  }
+  return value;
+}
 
 const CsvTable: React.FC<ICsvTable> = ({ data, headers }) => {
   const supplierHeaders = headers.filter(
@@ -90,16 +121,7 @@ const CsvTable: React.FC<ICsvTable> = ({ data, headers }) => {
         <div style={{ margin: "10px", position: "relative" }} ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            style={{
-              padding: "6px 10px",
-              borderRadius: "6px",
-              border: "1px solid #ccc",
-              background: "#fff",
-              color: "black",
-              cursor: "pointer",
-              fontWeight: 600,
-              minWidth: "140px",
-            }}
+            style={styles.freezeSelect}
           >
             Columns ({visibleColumns.size}) ▼
           </button>
@@ -198,7 +220,14 @@ const CsvTable: React.FC<ICsvTable> = ({ data, headers }) => {
           </select>
         </div>
       </div>
-      <div style={{ overflowX: "auto", maxWidth: "100%" }}>
+      <div
+        className="csv-scroll-container"
+        style={{
+          overflow: "auto",
+          maxWidth: "100%",
+          maxHeight: "70vh",
+        }}
+      >
         {" "}
         <table style={styles.table}>
           <thead>

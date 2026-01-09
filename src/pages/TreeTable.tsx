@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { CsvTreeNode } from "../utils/schema";
-import { thStyle } from "../allStyles";
+import { thStyle } from "../styles/custom/allStyles";
 
 type ITreeNode = {
   node: CsvTreeNode;

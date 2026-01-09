@@ -1,7 +1,15 @@
-import { getHeatColor, getRateMinMax } from "./utils/commonUtils";
-import type { ICell } from "./utils/schema";
+import { getHeatColor, getRateMinMax } from "../../utils/commonUtils";
+import type { ICell } from "../../utils/schema";
 
 export const uploadPageStyles: Record<string, React.CSSProperties> = {
+  removeBtn: {
+    background: "transparent",
+    border: "none",
+    color: "#dc2626",
+    cursor: "pointer",
+    fontWeight: 600,
+    fontSize: "13px",
+  },
   fileName: {
     marginTop: "16px",
     display: "flex",
@@ -210,14 +218,14 @@ export const tablePageStyles: Record<string, React.CSSProperties> = {
 
 export const tableStyles: Record<string, React.CSSProperties> = {
   freezeSelect: {
-    padding: "4px 8px",
-    fontSize: "13px",
-    cursor: "pointer",
-    backgroundColor: "#fff",
-    color: "#000",
+    padding: "6px 10px",
+    borderRadius: "6px",
     border: "1px solid #ccc",
-    borderRadius: "4px",
-    appearance: "auto",
+    background: "#fff",
+    color: "black",
+    cursor: "pointer",
+    fontWeight: 600,
+    minWidth: "140px",
   },
   container: {
     overflowX: "auto",
